@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Utilisateur implements Serializable {
 
     @Id
@@ -35,4 +35,7 @@ public class Utilisateur implements Serializable {
     @JoinColumn(nullable = true,name = "admin_id")
     private Administrateur admin;
 
+    //Security attributes
+    private String secret1;
+    private String secret2;
 }
