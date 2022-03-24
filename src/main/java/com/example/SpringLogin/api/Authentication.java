@@ -50,10 +50,11 @@ public class Authentication {
 
         //Making the token
         String accessToken = jwtHandler.generateActivationToken(realUser);
+        String activationCode = new Base64StringKeyGenerator().generateKey();
         Map<String,String> response = new HashMap<>();
         response.put("access_token",accessToken);
-        response.put("activation_code","1");
-        activationUserMap.put("1",realUser);
+        response.put("activation_code",activationCode);
+        activationUserMap.put(activationCode,realUser);
         return new ResponseEntity<Map<String,String>>(response,HttpStatus.OK);
 
     }
@@ -70,7 +71,7 @@ public class Authentication {
     {
         if(refreshToken == null){
             Map<String,String> error = new HashMap<>();
-            error.put("Error","Forbidden");
+            error.put("Error","Forbidden:Null Token");
             return new ResponseEntity<Map<String,String>>(error, HttpStatus.FORBIDDEN);
         }
 
@@ -78,14 +79,9 @@ public class Authentication {
             Utilisateur user = jwtHandler.parseAuthorizationToken(refreshToken.get("refresh_token"));
             Utilisateur realUser = userService.findUserByEmail(user.getEmail());
 
-            if(user.getUserRole().equals("NOT_ACTIVATED")){
-                Map<String,String> error = new HashMap<>();
-                error.put("Error","Forbidden");
-                return new ResponseEntity<Map<String,String>>(error, HttpStatus.FORBIDDEN);
-            }
             if(realUser == null){
                 Map<String,String> error = new HashMap<>();
-                error.put("Error","Error");
+                error.put("Error","Error:No user of that name");
                 return new ResponseEntity<Map<String,String>>(error, HttpStatus.FORBIDDEN);
             }
 
@@ -97,11 +93,9 @@ public class Authentication {
         }
         catch(Exception e){
             Map<String,String> error = new HashMap<>();
-            error.put("Error","Forbidden");
+            error.put("Error","Forbidden:"+e.getMessage());
             return new ResponseEntity<Map<String,String>>(error, HttpStatus.FORBIDDEN);
         }
-
-
     }
 
 

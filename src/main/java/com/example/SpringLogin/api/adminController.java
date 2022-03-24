@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -29,8 +31,8 @@ public class adminController {
     }
 
     @PostMapping("/write")
-    private ResponseEntity<String> write(){
-        return ResponseEntity.ok().body("Writing...");
+    private Utilisateur write(@RequestBody Utilisateur user){
+        return utilisateurRepo.save(user);
     }
 
     @GetMapping("/getUser")
@@ -42,5 +44,11 @@ public class adminController {
             return new ResponseEntity<Utilisateur>(HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok().body(user);
+    }
+
+    @GetMapping("/getUsers")
+    private ArrayList<Utilisateur> getUser(){
+
+        return (ArrayList<Utilisateur>)utilisateurRepo.findAll();
     }
 }

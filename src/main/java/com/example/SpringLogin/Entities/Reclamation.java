@@ -23,7 +23,7 @@ public class Reclamation implements Serializable {
     @Column(nullable = false)
     private String subject;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "copie_id")
     private Copie copie;
 }

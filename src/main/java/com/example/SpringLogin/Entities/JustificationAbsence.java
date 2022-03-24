@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class JustificationAbsence implements Serializable {
 
     @Id
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Présences présences;
 
     @Column(nullable = false)

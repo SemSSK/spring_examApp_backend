@@ -19,11 +19,10 @@ public class securityConf extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         ActivationFilter activationFilter = new ActivationFilter();
         AuthorizationFilter authorizationFilter = new AuthorizationFilter(utilisateurRepo);
-        AdminFilter adminFilter = new AdminFilter();
-        EnseignantFilter enseignantFilter = new EnseignantFilter();
-        EtudiantFilter etudiantFilter = new EtudiantFilter();
+        RoleFilter roleFilter = new RoleFilter();
 
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -31,9 +30,7 @@ public class securityConf extends WebSecurityConfigurerAdapter {
         //Adding the filters
         http.addFilterAfter(activationFilter, BasicAuthenticationFilter.class);
         http.addFilterAfter(authorizationFilter, activationFilter.getClass());
-        http.addFilterAfter(adminFilter, authorizationFilter.getClass());
-        http.addFilterAfter(enseignantFilter,adminFilter.getClass());
-        http.addFilterAfter(etudiantFilter,enseignantFilter.getClass());
+        http.addFilterAfter(roleFilter, authorizationFilter.getClass());
 
     }
 

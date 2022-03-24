@@ -30,7 +30,7 @@ public class AuthorizationFilter  extends GenericFilterBean {
         HttpServletResponse res = (HttpServletResponse) servletResponse;
         String direction = req.getServletPath();
 
-        if(direction.equals("/auth/login") || direction.equals("/auth/activation")){
+        if(direction.startsWith("/auth")){
             filterChain.doFilter(servletRequest,servletResponse);
         }
         else
@@ -44,6 +44,7 @@ public class AuthorizationFilter  extends GenericFilterBean {
             }
             catch(Exception e){
                 System.out.println(e.getMessage());
+                System.out.println("Blocked by Authorization filter");
                 res.sendError(HttpServletResponse.SC_FORBIDDEN);
             }
         }

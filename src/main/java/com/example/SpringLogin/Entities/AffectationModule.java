@@ -29,12 +29,12 @@ public class AffectationModule  implements Serializable {
     private String type;
     private Timestamp affectationDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "enseignant_id")
     @MapsId("enseignantId")
     private Enseignant enseignant;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "module_id")
     @MapsId("moduleId")
     private Module module;

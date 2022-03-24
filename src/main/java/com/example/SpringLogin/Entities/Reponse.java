@@ -18,11 +18,11 @@ public class Reponse implements Serializable {
     private String content;
     private float points;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "copie_id")
     private Copie copie;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
     private Question question;
 }

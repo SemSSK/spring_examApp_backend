@@ -29,6 +29,7 @@ public class JWTHandler {
 
     public String refreshToken(Utilisateur user){
         Algorithm algorithm = Algorithm.HMAC256(secretAuthorization.getBytes());
+        System.out.println(user.getUserRole());
         String accessToken = JWT.create()
                 .withSubject(user.getEmail())
                 .withClaim("role",user.getUserRole())

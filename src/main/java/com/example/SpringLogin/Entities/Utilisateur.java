@@ -31,11 +31,9 @@ public class Utilisateur implements Serializable {
     @Column(unique = true)
     private String urlProfile;
 
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = true,name = "admin_id")
     private Administrateur admin;
 
-    //Security attributes
-    private String secret1;
-    private String secret2;
 }

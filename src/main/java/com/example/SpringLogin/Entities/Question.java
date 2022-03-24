@@ -1,5 +1,6 @@
 package com.example.SpringLogin.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,17 +32,19 @@ public class Question implements Serializable {
     private float rating;
     private int nbrRaitings = 0;
 
-    @ManyToMany(mappedBy = "questions")
+    @ManyToMany(mappedBy = "questions",fetch = FetchType.LAZY)
+    @JsonIgnore
     private Collection<Examen> examens = new ArrayList<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "enseignant_id")
     private Enseignant enseignant;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "module_id")
     private Module module;
 
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question",fetch = FetchType.LAZY)
+    @JsonIgnore
     private Collection<Reponse> reponses = new ArrayList<>();
 }

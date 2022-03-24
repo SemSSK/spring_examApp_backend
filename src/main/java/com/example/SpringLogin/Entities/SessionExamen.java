@@ -1,5 +1,6 @@
 package com.example.SpringLogin.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,20 +20,21 @@ public class SessionExamen implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long sessionId;
 
-    @OneToMany(mappedBy = "sessionExamen")
+    @OneToMany(mappedBy = "sessionExamen",fetch = FetchType.LAZY)
     private Collection<Présences> présences = new ArrayList<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="planning_id")
     private PlanningExamen plannings;
 
-    @OneToMany(mappedBy = "sessionExamen")
+    @OneToMany(mappedBy = "sessionExamen",fetch = FetchType.LAZY)
+    @JsonIgnore
     private Collection<Enregistrement> enregistrements = new ArrayList<>();
 
-    @OneToOne(mappedBy = "sessionExamen")
+    @OneToOne(mappedBy = "sessionExamen",fetch = FetchType.LAZY)
     private ProcesSurSession procesSurSessions;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "surveillant_id")
     private Enseignant surveillant;
 

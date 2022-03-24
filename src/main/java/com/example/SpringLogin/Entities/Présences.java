@@ -20,16 +20,16 @@ public class Présences implements Serializable{
     private String state;
     private String justification;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "etudiant_id")
     @MapsId("etudiantId")
     private Etudiant etudiant;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sessionexamen_id")
     @MapsId("sessionId")
     private SessionExamen sessionExamen;
 
-    @OneToOne(mappedBy = "présences")
+    @OneToOne(mappedBy = "présences",fetch = FetchType.LAZY)
     private JustificationAbsence justificationAbsence;
 }

@@ -19,7 +19,7 @@ public class ProcesSurSession implements Serializable {
     private Boolean notify;
 
     @Id
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private SessionExamen sessionExamen;
 
 

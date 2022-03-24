@@ -19,17 +19,17 @@ public class Copie  implements Serializable {
     private String observation;
     private float note;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exam_id")
     private Examen exam;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "etudiant_id")
     private Etudiant etudiant;
 
-    @OneToMany(mappedBy = "copie")
+    @OneToMany(mappedBy = "copie",fetch = FetchType.LAZY)
     private Collection<Reponse> reponses = new ArrayList<>();
 
-    @OneToOne(mappedBy = "copie")
+    @OneToOne(mappedBy = "copie",fetch = FetchType.LAZY)
     private Reclamation reclamation;
 }

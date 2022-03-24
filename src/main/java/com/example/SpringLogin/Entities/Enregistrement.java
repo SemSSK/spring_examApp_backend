@@ -20,12 +20,12 @@ public class Enregistrement  implements Serializable{
     @Column(nullable = false,unique = true)
     private String url;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "etudiant_id")
     @MapsId("etudiantId")
     private Etudiant etudiant;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "session_id")
     @MapsId("sessionId")
     private SessionExamen sessionExamen;

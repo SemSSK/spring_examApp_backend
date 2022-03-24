@@ -1,5 +1,6 @@
 package com.example.SpringLogin.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,13 +18,16 @@ public class Administrateur extends Utilisateur{
     @Column(nullable = false)
     private int privilege;
 
-    @OneToMany(mappedBy = "admin")
+    @OneToMany(mappedBy = "admin",fetch = FetchType.LAZY)
+    @JsonIgnore
     private Collection<Utilisateur> createdUsers = new ArrayList<>();
 
-    @OneToMany(mappedBy = "admin")
+    @OneToMany(mappedBy = "admin",fetch = FetchType.LAZY)
+    @JsonIgnore
     private Collection<PlanningExamen> createdPlans = new ArrayList<>();
 
-    @OneToMany(mappedBy = "admin")
+    @OneToMany(mappedBy = "admin",fetch = FetchType.LAZY)
+    @JsonIgnore
     private Collection<Module> createdModules = new ArrayList<>();
 
 }

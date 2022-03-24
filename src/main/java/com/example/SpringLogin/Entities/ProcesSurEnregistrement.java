@@ -21,6 +21,6 @@ public class ProcesSurEnregistrement implements Serializable {
     private Timestamp dateOfReview;
 
     @Id
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Enregistrement enregistrement;
 }
