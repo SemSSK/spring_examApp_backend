@@ -10,11 +10,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomUserDetailService implements UserDetailsService {
 
+
+
     @Autowired
     private final UtilisateurRepo utilisateurRepo;
 
     public CustomUserDetailService(UtilisateurRepo utilisateurRepo) {
         this.utilisateurRepo = utilisateurRepo;
+        System.out.println("CustomUserDetailService instatiated");
     }
 
     @Override

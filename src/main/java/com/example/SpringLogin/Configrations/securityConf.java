@@ -59,8 +59,7 @@ public class securityConf extends WebSecurityConfigurerAdapter {
     //Replaces spring authenticationProvider and UserDetailService with custom ones to work with database
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(firstAuthProvider)
-                .userDetailsService(new CustomUserDetailService(utilisateurRepo));
+        auth.authenticationProvider(firstAuthProvider);
     }
 
 

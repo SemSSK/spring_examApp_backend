@@ -6,10 +6,10 @@ import java.util.HashMap;
 
 @Data
 public class ActivationCode {
-
+    private final int MAX_ATTEMPTS_ALLOWED = 3;
     private String code;
     private Long timeLeft;
-    public static HashMap<String,ActivationCode> codesMap = new HashMap<>();
+    private int attempts = 0;
 
     public ActivationCode(String code)
     {
@@ -21,5 +21,8 @@ public class ActivationCode {
         return timeLeft > System.currentTimeMillis();
     }
 
-
+    public boolean incrementAttempts(){
+        attempts++;
+        return attempts < MAX_ATTEMPTS_ALLOWED;
+    }
 }

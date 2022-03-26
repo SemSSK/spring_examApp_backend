@@ -1,6 +1,6 @@
 package com.example.SpringLogin.api;
 
-import com.example.SpringLogin.LogInWork.ActivationCode;
+import com.example.SpringLogin.LogInWork.ActivationCodeService;
 import com.example.SpringLogin.LogInWork.ContextHandlerClass;
 import com.example.SpringLogin.LogInWork.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +21,8 @@ public class ActivationController {
     @Autowired
     private ContextHandlerClass contextHandlerClass;
 
+    @Autowired
+    private ActivationCodeService activationCodeService;
 
     @PostMapping("")
     public ResponseEntity<String> activate(@RequestBody Map<String,String> activation_code){
@@ -28,23 +30,12 @@ public class ActivationController {
         CustomUserDetails user = contextHandlerClass.getCurrentLoggedInUser();
 
         String enteredCode = activation_code.get("code");
-        ActivationCode code = ActivationCode.codesMap.get(user.getUsername());
 
-        if(code != null){
-            ActivationCode.codesMap.remove(user.getUsername());
-            if(code.isValid() && code.getCode().equals(enteredCode)){
-                contextHandlerClass.setCurrentLoggedInUserAuthorities();
-                return new ResponseEntity<String>("Ok",HttpStatus.OK);
-            }
-            else{
-                SecurityContextHolder.clearContext();
-                return new ResponseEntity<String>("Activation code invalide or not logged in", HttpStatus.NOT_FOUND);
-            }
+        if(activationCodeService.treatCode(user.getUsername(),enteredCode)){
+            contextHandlerClass.setCurrentLoggedInUserAuthorities();
+            return new ResponseEntity<String>("Ok",HttpStatus.OK);
         }
-        else{
-            SecurityContextHolder.clearContext();
-            return new ResponseEntity<String>("No key", HttpStatus.NOT_FOUND);
-        }
+        return new ResponseEntity<String>("Invalide activation code", HttpStatus.BAD_REQUEST);
 
     }
 

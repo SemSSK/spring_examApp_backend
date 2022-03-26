@@ -9,6 +9,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class ContextHandlerClass {
 
+    public ContextHandlerClass(){
+        System.out.println("ContextHandlerClass instatiated");
+    }
+
     private Object getPrincipal(){
         return SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
