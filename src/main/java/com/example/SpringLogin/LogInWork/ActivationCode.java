@@ -1,9 +1,7 @@
 package com.example.SpringLogin.LogInWork;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.sql.Timestamp;
 import java.util.HashMap;
 
 @Data

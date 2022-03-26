@@ -8,12 +8,32 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Embeddable
 class AffectationModuleKey implements Serializable{
     @Column(name = "enseignant_Id")
     private Long enseignantId;
     @Column(name = "module_Id")
     private Long moduleId;
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == this){
+            return true;
+        }
+
+        if(!(obj instanceof AffectationModuleKey))
+        {
+            return false;
+        }
+
+        AffectationModuleKey key = (AffectationModuleKey) obj;
+
+        return (key.enseignantId.equals(this.enseignantId)
+                && key.moduleId.equals(this.moduleId));
+    }
 }
 
 

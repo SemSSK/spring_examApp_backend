@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/enseignant")
 @AllArgsConstructor
 public class enseignantController {
+
     @Autowired
     private final UtilisateurRepo utilisateurRepo;
 

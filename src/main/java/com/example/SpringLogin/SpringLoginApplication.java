@@ -14,12 +14,8 @@ public class SpringLoginApplication {
 	}
 
 
-
 	@Bean
 	public JavaMailSender javaMailSender(){
 		return new JavaMailSenderImpl();
 	}
-
-
-
 }
