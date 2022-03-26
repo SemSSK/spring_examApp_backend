@@ -20,6 +20,16 @@ public class EtudiantSessionKey implements Serializable {
     private Long sessionId;
 
     @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((etudiantId == null) ? 0 : etudiantId.hashCode() );
+        result = prime * result + ((sessionId == null) ? 0 : sessionId.hashCode());
+        return result;
+    }
+
+
+    @Override
     public boolean equals(Object obj) {
 
         if(obj == this){
@@ -35,4 +45,7 @@ public class EtudiantSessionKey implements Serializable {
         return (this.etudiantId.equals(key.etudiantId)
                 && this.sessionId.equals(key.sessionId));
     }
+
+
+
 }
