@@ -1,5 +1,6 @@
 package com.example.SpringLogin.Configrations;
 
+import com.example.SpringLogin.Enumarators.Role;
 import com.example.SpringLogin.LogInWork.CustomAuthFilter;
 import com.example.SpringLogin.LogInWork.CustomUserDetailService;
 import com.example.SpringLogin.LogInWork.FirstAuthProvider;
@@ -7,6 +8,7 @@ import com.example.SpringLogin.Repos.UtilisateurRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -46,10 +48,10 @@ public class securityConf extends WebSecurityConfigurerAdapter {
 
         //Configuring allowed and forbidden paths depending on roles and authentications
         http.authorizeRequests()
-                .antMatchers("/admin").hasRole("ADMIN")                 //Only admin can access the  RESTControllers mapped with /admin
-                .antMatchers("/etudiant").hasRole("ETUDIANT")           //Only Etudiant can access the  RESTControllers mapped with /etudiant
-                .antMatchers("/enseignant").hasRole("ENSEIGNANT")       //Only Enseignant can access the  RESTControllers mapped with /enseignant
-                .antMatchers("/activate").hasRole("NOT_ACTIVATED")      //Only Not activated logins can access RESTControllers mapped with /activate
+                .antMatchers("/admin").hasRole(Role.ADMIN)                 //Only admin can access the  RESTControllers mapped with /admin
+                .antMatchers("/etudiant").hasRole(Role.ETUDIANT)           //Only Etudiant can access the  RESTControllers mapped with /etudiant
+                .antMatchers("/enseignant").hasRole(Role.ENSEIGNANT)       //Only Enseignant can access the  RESTControllers mapped with /enseignant
+                .antMatchers("/authorization/*").authenticated()     //Only Not activated logins can access RESTControllers mapped with /activate
                 .anyRequest().authenticated()                                      //For Every other request user needs to be authenticated
                 .and().addFilter(authFilter);                                      //Adding the custom Authentication Filter
         //****************************************************************
@@ -61,7 +63,6 @@ public class securityConf extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(firstAuthProvider);
     }
-
 
     @Bean
     public PasswordEncoder PasswordEncoder(){

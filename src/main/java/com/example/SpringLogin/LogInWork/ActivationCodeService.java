@@ -30,11 +30,11 @@ public class ActivationCodeService {
 
     public boolean treatCode(String email,String enteredcode){
         ActivationCode code = getCode(email);
+        boolean validTrial = code.incrementAttempts();
         boolean codeIsCorrect = (code.isValid()
-                && code.getCode().equals(enteredcode))
-                && code.incrementAttempts();
+                && code.getCode().equals(enteredcode));
 
-        if(!code.incrementAttempts() && !codeIsCorrect){
+        if(!validTrial && !codeIsCorrect){
             codesMap.remove(email);
             SecurityContextHolder.clearContext();
         }

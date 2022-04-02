@@ -16,11 +16,27 @@ public class ProcesSurSession implements Serializable {
     private String obsevation;
 
     @Column(nullable = false)
-    private Boolean notify;
+    private boolean notify;
 
     @Id
     @OneToOne(fetch = FetchType.LAZY)
     private SessionExamen sessionExamen;
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if(obj == this){
+            return true;
+        }
+
+        if(!(obj instanceof ProcesSurSession)){
+            return false;
+        }
+
+        ProcesSurSession procesSurSession = (ProcesSurSession)obj;
+
+        return this.sessionExamen.equals(procesSurSession.sessionExamen);
+    }
 
 
 }

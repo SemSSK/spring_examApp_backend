@@ -23,7 +23,7 @@ public class SessionExamen implements Serializable {
     @OneToMany(mappedBy = "sessionExamen",fetch = FetchType.LAZY)
     private Collection<Présences> présences = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name ="planning_id")
     private PlanningExamen plannings;
 
@@ -34,8 +34,25 @@ public class SessionExamen implements Serializable {
     @OneToOne(mappedBy = "sessionExamen",fetch = FetchType.LAZY)
     private ProcesSurSession procesSurSessions;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "surveillant_id")
     private Enseignant surveillant;
+
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if(obj == this){
+            return true;
+        }
+
+        if(!(obj instanceof SessionExamen)){
+            return false;
+        }
+
+        SessionExamen sessionExamen = (SessionExamen)obj;
+
+        return this.sessionId.equals(sessionExamen.sessionId);
+    }
 
 }

@@ -1,6 +1,7 @@
 package com.example.SpringLogin.LogInWork;
 
 import com.example.SpringLogin.Entities.Utilisateur;
+import com.example.SpringLogin.Enumarators.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +19,7 @@ public class CustomUserDetails implements UserDetails {
     public CustomUserDetails(Utilisateur user){
         this.user = user;
         roles = new ArrayList<>();
-        roles.add(new SimpleGrantedAuthority("ROLE_NOT_ACTIVATED"));
+        roles.add(new SimpleGrantedAuthority("ROLE_"+ Role.NOT_ACTIVATED));
     }
 
     public void setAuthority(String role){

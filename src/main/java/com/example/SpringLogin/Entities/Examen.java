@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -24,17 +25,33 @@ public class Examen implements Serializable {
     private Timestamp dateCreation;
     private String publicInfo;
     @Column(nullable = false)
-    private Boolean isActive = false;
+    private boolean isActive = false;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(joinColumns = @JoinColumn(name = "examen_id"),
         inverseJoinColumns = @JoinColumn(name = "question_id"))
-    @JsonIgnore
     private Collection<Question> questions = new ArrayList<>();
 
     @OneToMany(mappedBy = "exam",fetch = FetchType.LAZY)
     @JsonIgnore
     private Collection<Copie> copies = new ArrayList<>();
 
+    @OneToOne
+    private Module module;
 
+    @Override
+    public boolean equals(Object obj){
+        if(obj == this){
+            return true;
+        }
+
+        if(!(obj instanceof Examen)){
+            return false;
+        }
+
+        Examen examen = (Examen) obj;
+
+        return this.examId.equals(examen.examId);
+    }
 }

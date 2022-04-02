@@ -31,8 +31,23 @@ public class Utilisateur implements Serializable {
     @Column(unique = true)
     private String urlProfile;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(nullable = true,name = "admin_id")
     private Administrateur admin;
 
+    @Override
+    public boolean equals(Object obj)
+    {
+        if(obj == this){
+            return true;
+        }
+
+        if(!(obj instanceof Utilisateur)){
+            return false;
+        }
+
+        Utilisateur user = (Utilisateur) obj;
+
+        return this.userId.equals(user.userId);
+    }
 }

@@ -7,16 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
 @RestController
-@RequestMapping("/activate")
-public class ActivationController {
+@RequestMapping("/authorization")
+public class AuthorizationController {
 
     @Autowired
     private ContextHandlerClass contextHandlerClass;
@@ -24,7 +21,7 @@ public class ActivationController {
     @Autowired
     private ActivationCodeService activationCodeService;
 
-    @PostMapping("")
+    @PostMapping("/activate")
     public ResponseEntity<String> activate(@RequestBody Map<String,String> activation_code){
 
         CustomUserDetails user = contextHandlerClass.getCurrentLoggedInUser();
@@ -33,7 +30,7 @@ public class ActivationController {
 
         if(activationCodeService.treatCode(user.getUsername(),enteredCode)){
             contextHandlerClass.setCurrentLoggedInUserAuthorities();
-            return new ResponseEntity<String>("Ok",HttpStatus.OK);
+            return new ResponseEntity<String>(user.getUtilisateur().getUserRole(),HttpStatus.OK);
         }
         return new ResponseEntity<String>("Invalide activation code", HttpStatus.BAD_REQUEST);
 
@@ -45,4 +42,8 @@ public class ActivationController {
         return ResponseEntity.ok("Logout successfully");
     }
 
+    @GetMapping("/loggedIn")
+    public ResponseEntity<?> checkIfLoggedIn(){
+        return ResponseEntity.ok().body("You are logged in");
+    }
 }

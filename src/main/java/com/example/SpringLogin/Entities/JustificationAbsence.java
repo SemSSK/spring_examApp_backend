@@ -22,4 +22,18 @@ public class JustificationAbsence implements Serializable {
     @Column(nullable = false)
     private String description;
 
+    @Override
+    public boolean equals(Object obj){
+        if(obj == this){
+            return true;
+        }
+
+        if(!(obj instanceof JustificationAbsence)){
+            return false;
+        }
+
+        JustificationAbsence justificationAbsence = (JustificationAbsence) obj;
+
+        return this.présences.equals(justificationAbsence.présences);
+    }
 }

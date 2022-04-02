@@ -28,4 +28,21 @@ public class Enseignant extends Utilisateur {
     @OneToMany(mappedBy = "surveillant",fetch = FetchType.LAZY)
     @JsonIgnore
     private Collection<SessionExamen> sessionExamens = new ArrayList<>();
+
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if(obj == this){
+            return true;
+        }
+
+        if(!(obj instanceof Enseignant)){
+            return false;
+        }
+
+        Enseignant enseignant = (Enseignant) obj;
+
+        return this.getUserId().equals(enseignant.getUserId());
+    }
 }

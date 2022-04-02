@@ -33,4 +33,20 @@ public class Etudiant extends Utilisateur {
     @ManyToMany(mappedBy = "etudiants",fetch = FetchType.LAZY)
     @JsonIgnore
     private Collection<PlanningExamen> planningExamens = new ArrayList<>();
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if(obj == this){
+            return true;
+        }
+
+        if(!(obj instanceof Etudiant)){
+            return false;
+        }
+
+        Etudiant etudiant = (Etudiant) obj;
+
+        return this.getUserId().equals(etudiant.getUserId());
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.SpringLogin.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,11 +20,11 @@ public class Copie  implements Serializable {
     private String observation;
     private float note;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "exam_id")
     private Examen exam;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "etudiant_id")
     private Etudiant etudiant;
 
@@ -32,4 +33,20 @@ public class Copie  implements Serializable {
 
     @OneToOne(mappedBy = "copie",fetch = FetchType.LAZY)
     private Reclamation reclamation;
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if(obj == this){
+            return true;
+        }
+
+        if(!(obj instanceof Copie)){
+            return false;
+        }
+
+        Copie copie = (Copie) obj;
+
+        return this.copieId.equals(copie.copieId);
+    }
 }

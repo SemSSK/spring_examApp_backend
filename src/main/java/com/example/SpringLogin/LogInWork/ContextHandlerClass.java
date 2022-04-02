@@ -25,7 +25,7 @@ public class ContextHandlerClass {
 
     public void setCurrentLoggedInUserAuthorities(){
         CustomUserDetails user = getCurrentLoggedInUser();
-        user.setAuthority(user.getUtilisateur().getUserRole());
+        user.setAuthority("ROLE_" + user.getUtilisateur().getUserRole());
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                 new UsernamePasswordAuthenticationToken(user,auth.getCredentials(),user.getAuthorities());

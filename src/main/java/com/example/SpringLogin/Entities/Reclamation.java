@@ -26,4 +26,21 @@ public class Reclamation implements Serializable {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "copie_id")
     private Copie copie;
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if(obj == this){
+            return true;
+        }
+
+        if(!(obj instanceof Reclamation)){
+            return false;
+        }
+
+        Reclamation reclamation = (Reclamation)obj;
+
+        return this.claimId.equals(reclamation.claimId);
+    }
+
 }

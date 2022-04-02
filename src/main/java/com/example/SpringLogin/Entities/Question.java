@@ -36,15 +36,31 @@ public class Question implements Serializable {
     @JsonIgnore
     private Collection<Examen> examens = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "enseignant_id")
     private Enseignant enseignant;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "module_id")
     private Module module;
 
     @OneToMany(mappedBy = "question",fetch = FetchType.LAZY)
     @JsonIgnore
     private Collection<Reponse> reponses = new ArrayList<>();
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if(obj == this){
+            return true;
+        }
+
+        if(!(obj instanceof Question)){
+            return false;
+        }
+
+        Question question = (Question)obj;
+
+        return this.questionId.equals(question.questionId);
+    }
 }

@@ -17,6 +17,8 @@ import java.io.IOException;
 
 public class CustomAuthFilter extends UsernamePasswordAuthenticationFilter {
 
+    private final int TIMEOUT_INTERVAL = 60 * 30;
+
     public CustomAuthFilter(AuthenticationManager authenticationManager){
         super(authenticationManager);
         this.setFilterProcessesUrl("/login");
@@ -26,7 +28,7 @@ public class CustomAuthFilter extends UsernamePasswordAuthenticationFilter {
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                             FilterChain chain, Authentication authResult)
             throws IOException, ServletException {
-
+        request.getSession().setMaxInactiveInterval(TIMEOUT_INTERVAL);
         SecurityContext context = SecurityContextHolder.createEmptyContext();
         context.setAuthentication(authResult);
         SecurityContextHolder.setContext(context);

@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 public class ProcesSurEnregistrement implements Serializable {
 
     @Column(nullable = false)
-    private Boolean hasCheated;
+    private boolean hasCheated;
     private String observation;
     @Column(nullable = false)
     private Timestamp dateOfReview;
@@ -23,4 +23,21 @@ public class ProcesSurEnregistrement implements Serializable {
     @Id
     @OneToOne(fetch = FetchType.LAZY)
     private Enregistrement enregistrement;
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if(obj == this){
+            return true;
+        }
+
+        if(!(obj instanceof ProcesSurEnregistrement)){
+            return false;
+        }
+
+        ProcesSurEnregistrement procesSurEnregistrement = (ProcesSurEnregistrement)obj;
+
+        return this.enregistrement.equals(procesSurEnregistrement.enregistrement);
+    }
+
 }

@@ -31,7 +31,7 @@ public class PlanningExamen implements Serializable {
     @Column(nullable = false,unique = true)
     private String codeEtudiant;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="admin_id")
     private Administrateur admin;
 
@@ -44,4 +44,20 @@ public class PlanningExamen implements Serializable {
     @OneToMany(mappedBy = "plannings",fetch = FetchType.LAZY)
     @JsonIgnore
     private Collection<SessionExamen> sessionExamens = new ArrayList<>();
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if(obj == this){
+            return true;
+        }
+
+        if(!(obj instanceof PlanningExamen)){
+            return false;
+        }
+
+        PlanningExamen planningExamen = (PlanningExamen)obj;
+
+        return this.planId.equals(planningExamen.planId);
+    }
 }
