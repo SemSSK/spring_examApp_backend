@@ -15,10 +15,14 @@ public class QuestionController {
     @Autowired
     private QuestionService questionService;
 
-
     @GetMapping("/module")
     public List<AffectationModule> getModules(){
         return questionService.getAffectations();
+    }
+
+    @GetMapping("")
+    public List<Question> getQuestions(){
+        return questionService.getQuestions();
     }
 
     @PostMapping("")
@@ -43,7 +47,6 @@ public class QuestionController {
         }
     }
 
-    //CORRECT SOME ERROR CHECKING LIKE CHECKING IF QUESTION EXISTS BEFORE MODIFYING OR DELETING
 
     @PutMapping("")
     public String modQuestion(@RequestBody Question question) {

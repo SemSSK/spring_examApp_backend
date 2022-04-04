@@ -2,6 +2,7 @@ package com.example.SpringLogin.Services;
 
 import com.example.SpringLogin.Entities.*;
 import com.example.SpringLogin.Configrations.SecurityServices.ContextHandlerClass;
+import com.example.SpringLogin.Entities.Module;
 import com.example.SpringLogin.Repos.AffectationModuleRepo;
 import com.example.SpringLogin.Repos.ModuleRepo;
 import com.example.SpringLogin.Repos.QuestionRepo;
@@ -9,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestionService {
@@ -51,6 +54,17 @@ public class QuestionService {
         }
         return affectationModule.get().getType().equals("COURS") ||
                 question.getEnseignant().equals(getEnseignant());
+    }
+
+
+    public List<Question> getQuestions() {
+        List<Module> modules = new ArrayList<>();
+        getAffectations().forEach(affectationModule -> {
+            modules.add(affectationModule.getModule());
+        });
+        return questionRepo.findAll().stream().filter(question -> {
+            return modules.contains(question.getModule());
+        }).collect(Collectors.toList());
     }
 
     public void addQuestion(Question question) throws Exception {
