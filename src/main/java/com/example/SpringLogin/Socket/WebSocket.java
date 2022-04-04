@@ -1,8 +1,5 @@
 package com.example.SpringLogin.Socket;
 
-import com.example.SpringLogin.LogInWork.ContextHandlerClass;
-import com.example.SpringLogin.LogInWork.CustomUserDetails;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;

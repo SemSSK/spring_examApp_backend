@@ -1,4 +1,4 @@
-package com.example.SpringLogin.LogInWork;
+package com.example.SpringLogin.Configrations.SecurityServices;
 
 import com.example.SpringLogin.Entities.Utilisateur;
 import com.example.SpringLogin.Enumarators.Role;

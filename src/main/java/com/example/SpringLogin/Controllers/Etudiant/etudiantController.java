@@ -1,4 +1,4 @@
-package com.example.SpringLogin.api;
+package com.example.SpringLogin.Controllers.Etudiant;
 
 import com.example.SpringLogin.Repos.UtilisateurRepo;
 import lombok.AllArgsConstructor;
@@ -11,15 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/enseignant")
 @AllArgsConstructor
-public class enseignantController {
-
+@RequestMapping("/etudiant")
+public class etudiantController {
     @Autowired
     private final UtilisateurRepo utilisateurRepo;
 
     @GetMapping("")
     private ResponseEntity<String> sayHello(){
-        return ResponseEntity.ok().body("Hello Enseignant");
+        return ResponseEntity.ok().body("Hello etudiant");
     }
 }

@@ -1,14 +1,12 @@
 package com.example.SpringLogin.Configrations;
 
 import com.example.SpringLogin.Enumarators.Role;
-import com.example.SpringLogin.LogInWork.CustomAuthFilter;
-import com.example.SpringLogin.LogInWork.CustomUserDetailService;
-import com.example.SpringLogin.LogInWork.FirstAuthProvider;
+import com.example.SpringLogin.Configrations.SecurityServices.CustomAuthFilter;
+import com.example.SpringLogin.Configrations.SecurityServices.FirstAuthProvider;
 import com.example.SpringLogin.Repos.UtilisateurRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

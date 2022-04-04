@@ -1,4 +1,4 @@
-package com.example.SpringLogin.api;
+package com.example.SpringLogin.Controllers.Administrateur;
 
 import com.example.SpringLogin.Entities.Utilisateur;
 import com.example.SpringLogin.Repos.UtilisateurRepo;
@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 @RestController
 @RequestMapping("/admin")

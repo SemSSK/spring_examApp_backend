@@ -1,4 +1,4 @@
-package com.example.SpringLogin.LogInWork;
+package com.example.SpringLogin.Configrations.SecurityServices;
 
 import com.example.SpringLogin.Repos.UtilisateurRepo;
 import org.springframework.beans.factory.annotation.Autowired;

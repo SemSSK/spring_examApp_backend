@@ -1,4 +1,4 @@
-package com.example.SpringLogin.api;
+package com.example.SpringLogin.Controllers.Enseignant;
 
 import com.example.SpringLogin.Entities.Examen;
 import com.example.SpringLogin.Entities.Module;

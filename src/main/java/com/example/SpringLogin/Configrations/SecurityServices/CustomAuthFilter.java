@@ -1,4 +1,4 @@
-package com.example.SpringLogin.LogInWork;
+package com.example.SpringLogin.Configrations.SecurityServices;
 
 import org.springframework.core.log.LogMessage;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -7,7 +7,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.stereotype.Service;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

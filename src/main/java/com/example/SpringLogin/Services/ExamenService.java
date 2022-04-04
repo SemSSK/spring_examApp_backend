@@ -2,7 +2,7 @@ package com.example.SpringLogin.Services;
 
 import com.example.SpringLogin.Entities.*;
 import com.example.SpringLogin.Entities.Module;
-import com.example.SpringLogin.LogInWork.ContextHandlerClass;
+import com.example.SpringLogin.Configrations.SecurityServices.ContextHandlerClass;
 import com.example.SpringLogin.Repos.AffectationModuleRepo;
 import com.example.SpringLogin.Repos.ExamenRepo;
 import com.example.SpringLogin.Repos.QuestionRepo;
@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 @Service

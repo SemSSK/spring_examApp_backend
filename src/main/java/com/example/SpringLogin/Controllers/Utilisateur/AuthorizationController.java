@@ -1,8 +1,8 @@
-package com.example.SpringLogin.api;
+package com.example.SpringLogin.Controllers.Utilisateur;
 
-import com.example.SpringLogin.LogInWork.ActivationCodeService;
-import com.example.SpringLogin.LogInWork.ContextHandlerClass;
-import com.example.SpringLogin.LogInWork.CustomUserDetails;
+import com.example.SpringLogin.Configrations.SecurityServices.ActivationCodeService;
+import com.example.SpringLogin.Configrations.SecurityServices.ContextHandlerClass;
+import com.example.SpringLogin.Configrations.SecurityServices.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

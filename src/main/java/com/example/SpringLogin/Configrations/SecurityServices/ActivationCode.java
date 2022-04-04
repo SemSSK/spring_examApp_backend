@@ -1,8 +1,7 @@
-package com.example.SpringLogin.LogInWork;
+package com.example.SpringLogin.Configrations.SecurityServices;
 
 import lombok.Data;
 
-import java.util.HashMap;
 
 @Data
 public class ActivationCode {
