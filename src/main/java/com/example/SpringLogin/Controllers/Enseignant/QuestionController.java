@@ -2,7 +2,7 @@ package com.example.SpringLogin.Controllers.Enseignant;
 
 import com.example.SpringLogin.Entities.AffectationModule;
 import com.example.SpringLogin.Entities.Question;
-import com.example.SpringLogin.Services.QuestionService;
+import com.example.SpringLogin.Services.EnseignantService.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,4 +1,4 @@
-package com.example.SpringLogin.Services;
+package com.example.SpringLogin.Services.EnseignantService;
 
 import com.example.SpringLogin.Entities.*;
 import com.example.SpringLogin.Entities.Module;

@@ -2,7 +2,7 @@ package com.example.SpringLogin.Controllers.Enseignant;
 
 import com.example.SpringLogin.Entities.Examen;
 import com.example.SpringLogin.Entities.Module;
-import com.example.SpringLogin.Services.ExamenService;
+import com.example.SpringLogin.Services.EnseignantService.ExamenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
