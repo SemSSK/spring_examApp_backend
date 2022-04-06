@@ -9,6 +9,7 @@ import com.example.SpringLogin.Repos.CopieRepo;
 import com.example.SpringLogin.Repos.ExamenRepo;
 import com.example.SpringLogin.Repos.ReponseRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,13 +35,11 @@ public class CorrectionService {
 
     private boolean cannotCorrectCopie(Examen examen){
         Optional<Examen> realExam = examenRepo.findById(examen.getExamId());
-        System.out.println(realExam.isEmpty());
         if(realExam.isEmpty())
         {
             return false;
         }
         Optional<AffectationModule> affectationModule = affectationModuleRepo.findByEnseignantAndModule(getEnseignant(),realExam.get().getModule());
-        System.out.println(affectationModule.isEmpty());
         return affectationModule.isEmpty();
     }
 
@@ -50,5 +49,14 @@ public class CorrectionService {
         }
 
         return copieRepo.findAllByExam(examen);
+    }
+
+    public void CorrectCopie(Reponse reponse) throws Exception{
+        Reponse dbReponse = reponseRepo.getById(reponse.getReponseId());
+        if(cannotCorrectCopie(dbReponse.getCopie().getExam())) {
+            throw new Exception("Cannot correct copie of module you do not teach");
+        }
+        dbReponse.setPoints(reponse.getPoints());
+        reponseRepo.save(dbReponse);
     }
 }
