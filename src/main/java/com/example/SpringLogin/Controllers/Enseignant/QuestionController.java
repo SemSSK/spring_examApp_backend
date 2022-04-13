@@ -15,11 +15,6 @@ public class QuestionController {
     @Autowired
     private QuestionService questionService;
 
-    @GetMapping("/module")
-    public List<AffectationModule> getModules(){
-        return questionService.getAffectations();
-    }
-
     @GetMapping("")
     public List<Question> getQuestions(){
         return questionService.getQuestions();

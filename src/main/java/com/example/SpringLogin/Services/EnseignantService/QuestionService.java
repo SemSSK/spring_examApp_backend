@@ -4,18 +4,20 @@ import com.example.SpringLogin.Entities.*;
 import com.example.SpringLogin.Configrations.SecurityServices.ContextHandlerClass;
 import com.example.SpringLogin.Entities.Module;
 import com.example.SpringLogin.Repos.AffectationModuleRepo;
+import com.example.SpringLogin.Repos.ExamenRepo;
 import com.example.SpringLogin.Repos.ModuleRepo;
 import com.example.SpringLogin.Repos.QuestionRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
+@Transactional(readOnly = true)
 public class QuestionService {
 
     @Autowired
@@ -24,6 +26,8 @@ public class QuestionService {
     private ModuleRepo moduleRepo;
     @Autowired
     private QuestionRepo questionRepo;
+    @Autowired
+    private ExamenRepo examenRepo;
     @Autowired
     private ContextHandlerClass contextHandlerClass;
 
@@ -36,8 +40,7 @@ public class QuestionService {
         return (Enseignant) contextHandlerClass.getCurrentLoggedInUser().getUtilisateur();
     }
 
-
-    public List<AffectationModule> getAffectations(){
+    private List<AffectationModule> getAffectations(){
         return affectationModuleRepo.findAllByEnseignant(getEnseignant());
     }
 
@@ -56,17 +59,15 @@ public class QuestionService {
                 question.getEnseignant().equals(getEnseignant());
     }
 
-
     public List<Question> getQuestions() {
         List<Module> modules = new ArrayList<>();
         getAffectations().forEach(affectationModule -> {
             modules.add(affectationModule.getModule());
         });
-        return questionRepo.findAll().stream().filter(question -> {
-            return modules.contains(question.getModule());
-        }).collect(Collectors.toList());
+        return questionRepo.findAll();
     }
 
+    @Transactional(readOnly = false)
     public void addQuestion(Question question) throws Exception {
         if(canAddQuestion(question)){
             question.setDateCreation(new Timestamp(System.currentTimeMillis()));
@@ -78,9 +79,19 @@ public class QuestionService {
         }
     }
 
+    @Transactional(readOnly = false)
     public void deleteQuestion(Long id) throws Exception {
-        Question question = questionRepo.getById(id);
+        Optional<Question> optQuestion = questionRepo.findById(id);
+        if(optQuestion.isEmpty()){
+            throw new Exception("No question to delete");
+        }
+        Question question = optQuestion.get();
         if(canAlterQuestion(question)){
+            Optional<Examen> examen = examenRepo.findByModule(question.getModule());
+            if(!examen.isEmpty()){
+                examen.get().setDateCreation(new Timestamp(System.currentTimeMillis()));
+                examen.get().getQuestions().remove(question);
+            }
             questionRepo.deleteById(id);
         }
         else{
@@ -88,11 +99,18 @@ public class QuestionService {
         }
     }
 
+    @Transactional(readOnly = false)
     public void modifyQuestion(Question question) throws Exception{
+        Optional<Question> optionalQuestion = questionRepo.findById(question.getQuestionId());
+        if(optionalQuestion.isEmpty()){
+            throw new Exception("No question to modify");
+        }
         Question newQuestion = questionRepo.getById(question.getQuestionId());
         if(canAlterQuestion(newQuestion)){
-            question.setDateCreation(new Timestamp(System.currentTimeMillis()));
-            questionRepo.save(question);
+            newQuestion.setContent(question.getContent());
+            newQuestion.setDescription(question.getDescription());
+            newQuestion.setTypeAnswer(question.getTypeAnswer());
+            newQuestion.setDateCreation(new Timestamp(System.currentTimeMillis()));
         }
         else{
             throw new Exception("Cannot Alter a question you did not add");

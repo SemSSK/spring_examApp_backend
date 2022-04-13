@@ -1,9 +1,7 @@
 package com.example.SpringLogin.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,7 +9,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Module implements Serializable {
@@ -27,20 +26,24 @@ public class Module implements Serializable {
     @Column(nullable = false)
     private boolean hasTDTP;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "admin_id")
     @JsonIgnore
     private Administrateur admin;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "module")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "module",cascade = CascadeType.ALL)
     @JsonIgnore
     private Collection<Question> questions;
 
-    @OneToMany(mappedBy = "module",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "module",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JsonIgnore
     private Collection<AffectationModule> affectationModules = new ArrayList<>();
 
-    @OneToOne(mappedBy = "module",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "module",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Collection<PlanningExamen> planningExamen = new ArrayList<>();
+
+    @OneToOne(mappedBy = "module",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JsonIgnore
     private Examen examen;
 

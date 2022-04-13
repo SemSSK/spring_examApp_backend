@@ -1,14 +1,14 @@
 package com.example.SpringLogin.Entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProcesSurSession implements Serializable {
@@ -19,7 +19,7 @@ public class ProcesSurSession implements Serializable {
     private boolean notify;
 
     @Id
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     private SessionExamen sessionExamen;
 
     @Override

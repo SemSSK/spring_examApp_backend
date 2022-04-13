@@ -18,11 +18,11 @@ public class ExamenController {
     @GetMapping("")
     public ResponseEntity<?> getExamen(@RequestBody Module module){
         try{
-            return new ResponseEntity<Examen>(examenService.getModuleExam(module), HttpStatus.OK);
+            return new ResponseEntity<>(examenService.getModuleExam(module), HttpStatus.OK);
         }
         catch (Exception e)
         {
-            return new ResponseEntity<String>(e.getMessage(),HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
         }
     }
 

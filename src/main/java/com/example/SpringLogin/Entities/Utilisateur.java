@@ -1,15 +1,14 @@
 package com.example.SpringLogin.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -33,9 +32,11 @@ public class Utilisateur implements Serializable {
     @Column(unique = true)
     private String urlProfile;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = true,name = "admin_id")
+    @JsonIgnore
     private Administrateur admin;
+
 
     @Override
     public boolean equals(Object obj)

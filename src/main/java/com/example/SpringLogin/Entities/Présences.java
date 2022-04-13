@@ -1,15 +1,15 @@
 package com.example.SpringLogin.Entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Présences implements Serializable{
@@ -31,6 +31,7 @@ public class Présences implements Serializable{
     private SessionExamen sessionExamen;
 
     @OneToOne(mappedBy = "présences",fetch = FetchType.LAZY)
+    @JsonIgnore
     private JustificationAbsence justificationAbsence;
 
     @Override

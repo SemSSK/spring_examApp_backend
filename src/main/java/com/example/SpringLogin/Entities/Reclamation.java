@@ -1,14 +1,14 @@
 package com.example.SpringLogin.Entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Reclamation implements Serializable {
@@ -23,7 +23,7 @@ public class Reclamation implements Serializable {
     @Column(nullable = false)
     private String subject;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "copie_id")
     private Copie copie;
 

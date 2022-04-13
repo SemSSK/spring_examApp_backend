@@ -1,13 +1,14 @@
 package com.example.SpringLogin.Controllers.Enseignant;
 
+import com.example.SpringLogin.Configrations.SecurityServices.ContextHandlerClass;
+import com.example.SpringLogin.Entities.Enseignant;
+import com.example.SpringLogin.Entities.Utilisateur;
 import com.example.SpringLogin.Repos.UtilisateurRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -16,10 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class enseignantController {
 
     @Autowired
-    private final UtilisateurRepo utilisateurRepo;
+    private ContextHandlerClass contextHandlerClass;
 
     @GetMapping("")
-    private ResponseEntity<String> sayHello(){
-        return ResponseEntity.ok().body("Hello Enseignant");
+    private ResponseEntity<Enseignant> getProfil(){
+        return new ResponseEntity<>((Enseignant)contextHandlerClass.getCurrentLoggedInUser().getUtilisateur(), HttpStatus.OK);
     }
+
+
 }

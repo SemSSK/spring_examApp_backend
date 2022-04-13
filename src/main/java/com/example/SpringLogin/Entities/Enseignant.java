@@ -1,27 +1,27 @@
 package com.example.SpringLogin.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Enseignant extends Utilisateur {
+
     @Column(nullable = false)
     private String grade;
 
-    @OneToMany(mappedBy = "enseignant",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "enseignant",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JsonIgnore
     private Collection<Question> questions = new ArrayList<>();
 
-    @OneToMany(mappedBy = "enseignant",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "enseignant",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JsonIgnore
     private Collection<AffectationModule> affectationModules = new ArrayList<>();
 
@@ -45,4 +45,5 @@ public class Enseignant extends Utilisateur {
 
         return this.getUserId().equals(enseignant.getUserId());
     }
+
 }

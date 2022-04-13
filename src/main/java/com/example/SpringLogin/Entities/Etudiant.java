@@ -1,16 +1,15 @@
 package com.example.SpringLogin.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Etudiant extends Utilisateur {
@@ -22,11 +21,11 @@ public class Etudiant extends Utilisateur {
     @Column(nullable = false)
     private int groupe;
 
-    @OneToMany(mappedBy="etudiant",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy="etudiant",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JsonIgnore
     private Collection<Copie> copies = new ArrayList<>();
 
-    @OneToMany(mappedBy = "etudiant",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "etudiant",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JsonIgnore
     private Collection<Enregistrement> enregistrements = new ArrayList<>();
 

@@ -1,9 +1,7 @@
 package com.example.SpringLogin.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,7 +9,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class SessionExamen implements Serializable {
@@ -20,18 +19,20 @@ public class SessionExamen implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long sessionId;
 
-    @OneToMany(mappedBy = "sessionExamen",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "sessionExamen",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonIgnore
     private Collection<Présences> présences = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name ="planning_id")
     private PlanningExamen plannings;
 
-    @OneToMany(mappedBy = "sessionExamen",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "sessionExamen",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JsonIgnore
     private Collection<Enregistrement> enregistrements = new ArrayList<>();
 
-    @OneToOne(mappedBy = "sessionExamen",fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "sessionExamen",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonIgnore
     private ProcesSurSession procesSurSessions;
 
     @ManyToOne(fetch = FetchType.EAGER)

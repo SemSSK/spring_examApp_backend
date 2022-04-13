@@ -1,9 +1,7 @@
 package com.example.SpringLogin.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,7 +10,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Question implements Serializable {
@@ -44,7 +43,7 @@ public class Question implements Serializable {
     @JoinColumn(name = "module_id")
     private Module module;
 
-    @OneToMany(mappedBy = "question",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "question",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JsonIgnore
     private Collection<Reponse> reponses = new ArrayList<>();
 

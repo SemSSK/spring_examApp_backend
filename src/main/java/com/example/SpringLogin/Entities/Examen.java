@@ -1,10 +1,7 @@
 package com.example.SpringLogin.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Type;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,7 +10,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Examen implements Serializable {
@@ -33,11 +31,11 @@ public class Examen implements Serializable {
         inverseJoinColumns = @JoinColumn(name = "question_id"))
     private Collection<Question> questions = new ArrayList<>();
 
-    @OneToMany(mappedBy = "exam",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "exam",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JsonIgnore
     private Collection<Copie> copies = new ArrayList<>();
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     private Module module;
 
     @Override

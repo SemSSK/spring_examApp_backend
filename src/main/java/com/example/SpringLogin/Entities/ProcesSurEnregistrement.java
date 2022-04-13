@@ -1,15 +1,15 @@
 package com.example.SpringLogin.Entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProcesSurEnregistrement implements Serializable {
@@ -21,7 +21,7 @@ public class ProcesSurEnregistrement implements Serializable {
     private Timestamp dateOfReview;
 
     @Id
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     private Enregistrement enregistrement;
 
     @Override

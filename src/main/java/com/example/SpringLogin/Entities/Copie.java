@@ -1,9 +1,7 @@
 package com.example.SpringLogin.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,7 +9,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Copie  implements Serializable {
@@ -20,18 +19,20 @@ public class Copie  implements Serializable {
     private String observation;
     private float note;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exam_id")
+    @JsonIgnore
     private Examen exam;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "etudiant_id")
     private Etudiant etudiant;
 
-    @OneToMany(mappedBy = "copie",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "copie",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private Collection<Reponse> reponses = new ArrayList<>();
 
-    @OneToOne(mappedBy = "copie",fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "copie",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonIgnore
     private Reclamation reclamation;
 
     @Override

@@ -1,9 +1,7 @@
 package com.example.SpringLogin.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,7 +11,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class PlanningExamen implements Serializable {
@@ -31,19 +30,23 @@ public class PlanningExamen implements Serializable {
     @Column(nullable = false,unique = true)
     private String codeEtudiant;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="admin_id")
+    @JsonIgnore
     private Administrateur admin;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(joinColumns = @JoinColumn(name = "plan_id"),
             inverseJoinColumns = @JoinColumn(name = "etudiant_id"))
-    @JsonIgnore
     private Collection<Etudiant> etudiants = new ArrayList<>();
 
-    @OneToMany(mappedBy = "plannings",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "plannings",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JsonIgnore
     private Collection<SessionExamen> sessionExamens = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="module_id")
+    private Module module;
 
     @Override
     public boolean equals(Object obj) {

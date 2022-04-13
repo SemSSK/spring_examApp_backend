@@ -19,6 +19,7 @@ public class CorrectionController {
     @Autowired
     private CorrectionService correctionService;
 
+
     @GetMapping("")
     public ResponseEntity<?> getCopies(@RequestBody Examen examen){
         try{
@@ -29,7 +30,8 @@ public class CorrectionController {
         }
     }
 
-    @PostMapping("")
+
+    @PatchMapping("")
     public ResponseEntity<?> correctReponse(@RequestBody Reponse reponse){
         try{
             correctionService.CorrectCopie(reponse);
