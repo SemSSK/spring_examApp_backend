@@ -39,11 +39,11 @@ public class Module implements Serializable {
     @JsonIgnore
     private Collection<AffectationModule> affectationModules = new ArrayList<>();
 
-    @OneToMany(mappedBy = "module",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "module",fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
     @JsonIgnore
     private Collection<PlanningExamen> planningExamen = new ArrayList<>();
 
-    @OneToOne(mappedBy = "module",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "module",fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
     @JsonIgnore
     private Examen examen;
 

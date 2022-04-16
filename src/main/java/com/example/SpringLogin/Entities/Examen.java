@@ -26,10 +26,8 @@ public class Examen implements Serializable {
     private boolean isActive = false;
 
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(joinColumns = @JoinColumn(name = "examen_id"),
-        inverseJoinColumns = @JoinColumn(name = "question_id"))
-    private Collection<Question> questions = new ArrayList<>();
+    @OneToMany(mappedBy = "examen",fetch = FetchType.EAGER,cascade = CascadeType.ALL,orphanRemoval = true)
+    private Collection<ExamenQuestions> examenQuestions = new ArrayList<>();
 
     @OneToMany(mappedBy = "exam",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JsonIgnore
@@ -37,6 +35,17 @@ public class Examen implements Serializable {
 
     @OneToOne(fetch = FetchType.EAGER)
     private Module module;
+
+    public void removeAllQuestion(){
+        this.examenQuestions.forEach(examenQuestions -> {
+            examenQuestions.removeExamen();
+        });
+        this.examenQuestions.removeAll(this.examenQuestions);
+    }
+
+    public void removeQuestion(ExamenQuestions examenQuestions){
+        this.examenQuestions.remove(examenQuestions);
+    }
 
     @Override
     public boolean equals(Object obj){

@@ -31,9 +31,9 @@ public class Question implements Serializable {
     private float rating;
     private int nbrRaitings = 0;
 
-    @ManyToMany(mappedBy = "questions",fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "question",orphanRemoval = true)
     @JsonIgnore
-    private Collection<Examen> examens = new ArrayList<>();
+    private Collection<ExamenQuestions> examenQuestions = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "enseignant_id")
@@ -46,6 +46,17 @@ public class Question implements Serializable {
     @OneToMany(mappedBy = "question",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JsonIgnore
     private Collection<Reponse> reponses = new ArrayList<>();
+
+    public void removeFromAllExams(){
+        this.examenQuestions.forEach(examenQuestions -> {
+            examenQuestions.removeQuestion();
+        });
+        this.examenQuestions.removeAll(examenQuestions);
+    }
+
+    public void removeFromExam(ExamenQuestions examenQuestions){
+        this.examenQuestions.remove(examenQuestions);
+    }
 
     @Override
     public boolean equals(Object obj) {

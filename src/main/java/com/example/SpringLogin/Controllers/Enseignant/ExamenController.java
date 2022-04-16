@@ -15,13 +15,14 @@ public class ExamenController {
     @Autowired
     private ExamenService examenService;
 
-    @GetMapping("")
-    public ResponseEntity<?> getExamen(@RequestBody Module module){
+    @GetMapping("{id}")
+    public ResponseEntity<?> getExamen(@PathVariable(name = "id") Long moduleId){
         try{
-            return new ResponseEntity<>(examenService.getModuleExam(module), HttpStatus.OK);
+            return new ResponseEntity<>(examenService.getModuleExam(moduleId), HttpStatus.OK);
         }
         catch (Exception e)
         {
+            e.printStackTrace();
             return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
         }
     }
@@ -33,17 +34,19 @@ public class ExamenController {
             return ResponseEntity.ok("Exam added successfuly");
         }
         catch(Exception e){
+            e.printStackTrace();
             return new ResponseEntity<String>(e.getMessage(),HttpStatus.FORBIDDEN);
         }
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteExamen(@PathVariable(name = "id") Long id){
         try{
             examenService.deleteExamen(id);
             return ResponseEntity.ok("Exam deleted successfuly");
         }
         catch(Exception e){
+            e.printStackTrace();
             return new ResponseEntity<String>(e.getMessage(),HttpStatus.FORBIDDEN);
         }
     }
@@ -55,6 +58,7 @@ public class ExamenController {
             return ResponseEntity.ok("Exam Modified successfuly");
         }
         catch(Exception e){
+            e.printStackTrace();
             return new ResponseEntity<String>(e.getMessage(),HttpStatus.FORBIDDEN);
         }
     }

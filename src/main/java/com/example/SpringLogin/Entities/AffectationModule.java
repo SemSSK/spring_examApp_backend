@@ -15,6 +15,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 public class AffectationModule  implements Serializable {
 
+    @Id
     @EmbeddedId
     private AffectationModuleKey affectationModuleId;
     @Column(name = "valueType")
@@ -32,8 +33,7 @@ public class AffectationModule  implements Serializable {
     private Module module;
 
     @Override
-    public boolean equals(Object obj)
-    {
+    public boolean equals(Object obj){
         if(obj == this){
             return true;
         }

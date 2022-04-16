@@ -3,10 +3,7 @@ package com.example.SpringLogin.Services.EnseignantService;
 import com.example.SpringLogin.Entities.*;
 import com.example.SpringLogin.Configrations.SecurityServices.ContextHandlerClass;
 import com.example.SpringLogin.Entities.Module;
-import com.example.SpringLogin.Repos.AffectationModuleRepo;
-import com.example.SpringLogin.Repos.ExamenRepo;
-import com.example.SpringLogin.Repos.ModuleRepo;
-import com.example.SpringLogin.Repos.QuestionRepo;
+import com.example.SpringLogin.Repos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +25,8 @@ public class QuestionService {
     private QuestionRepo questionRepo;
     @Autowired
     private ExamenRepo examenRepo;
+    @Autowired
+    private ExamenQuestionsRepo examenQuestionsRepo;
     @Autowired
     private ContextHandlerClass contextHandlerClass;
 
@@ -87,11 +86,10 @@ public class QuestionService {
         }
         Question question = optQuestion.get();
         if(canAlterQuestion(question)){
-            Optional<Examen> examen = examenRepo.findByModule(question.getModule());
-            if(!examen.isEmpty()){
-                examen.get().setDateCreation(new Timestamp(System.currentTimeMillis()));
-                examen.get().getQuestions().remove(question);
-            }
+            question.getExamenQuestions().forEach(examenQuestions -> {
+                examenQuestions.getExamen().getExamenQuestions().remove(examenQuestions);
+            });
+            question.getExamenQuestions().clear();
             questionRepo.deleteById(id);
         }
         else{
